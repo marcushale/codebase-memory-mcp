@@ -109,14 +109,24 @@ static const char *py_decorator_types[] = {"decorator", NULL};
 
 // ==================== GDSCRIPT ====================
 static const char *gd_func_types[] = {"function_definition", "constructor_definition", NULL};
-static const char *gd_class_types[] = {"class_definition", "enum_definition", NULL};
+// signal_statement is a first-class GDScript construct — treat as class member (like method)
+static const char *gd_class_types[] = {"class_definition", "enum_definition", "signal_statement", NULL};
+// class-level variable_statement and const_statement are fields when inside a class_definition
+static const char *gd_field_types[] = {"variable_statement", "const_statement",
+                                       "export_variable_statement", "onready_variable_statement",
+                                       NULL};
 static const char *gd_module_types[] = {"source", NULL};
 static const char *gd_call_types[] = {"call", "base_call", NULL};
+// extends_statement resolves the base class; preload/load are calls — handled via call_node_types
 static const char *gd_import_types[] = {"extends_statement", NULL};
+// GDScript has no separate import-from syntax; preload() is a call not a statement
+static const char *gd_import_from_types[] = {NULL};
 static const char *gd_branch_types[] = {"if_statement", "for_statement", "while_statement",
                                         "match_statement", "elif_clause", NULL};
 static const char *gd_var_types[] = {"variable_statement", "const_statement",
                                      "export_variable_statement", "onready_variable_statement", NULL};
+// GDScript assignment: plain assignment and augmented (+=, -=, etc.)
+static const char *gd_assign_types[] = {"assignment", "augmented_assignment", NULL};
 static const char *gd_decorator_types[] = {"annotation", NULL};
 
 // ==================== JAVASCRIPT ====================
@@ -1066,8 +1076,8 @@ static const CBMLangSpec lang_specs[CBM_LANG_COUNT] = {
      empty_types, NULL, NULL},
 
     // CBM_LANG_GDSCRIPT
-    {CBM_LANG_GDSCRIPT, gd_func_types, gd_class_types, empty_types, gd_module_types, gd_call_types,
-     gd_import_types, empty_types, gd_branch_types, gd_var_types, empty_types, empty_types, NULL,
+    {CBM_LANG_GDSCRIPT, gd_func_types, gd_class_types, gd_field_types, gd_module_types, gd_call_types,
+     gd_import_types, gd_import_from_types, gd_branch_types, gd_var_types, gd_assign_types, empty_types, NULL,
      gd_decorator_types, NULL, NULL},
 };
 
