@@ -70,6 +70,7 @@ extern const TSLanguage *tree_sitter_lean(void);
 extern const TSLanguage *tree_sitter_form(void);
 extern const TSLanguage *tree_sitter_magma(void);
 extern const TSLanguage *tree_sitter_wolfram(void);
+extern const TSLanguage *tree_sitter_gdscript(void);
 
 // -- Empty sentinel --
 static const char *empty_types[] = {NULL};
@@ -105,6 +106,18 @@ static const char *py_branch_types[] = {
 static const char *py_var_types[] = {"assignment", "augmented_assignment", NULL};
 static const char *py_throw_types[] = {"raise_statement", NULL};
 static const char *py_decorator_types[] = {"decorator", NULL};
+
+// ==================== GDSCRIPT ====================
+static const char *gd_func_types[] = {"function_definition", "constructor_definition", NULL};
+static const char *gd_class_types[] = {"class_definition", "enum_definition", NULL};
+static const char *gd_module_types[] = {"source", NULL};
+static const char *gd_call_types[] = {"call", "base_call", NULL};
+static const char *gd_import_types[] = {"extends_statement", NULL};
+static const char *gd_branch_types[] = {"if_statement", "for_statement", "while_statement",
+                                        "match_statement", "elif_clause", NULL};
+static const char *gd_var_types[] = {"variable_statement", "const_statement",
+                                     "export_variable_statement", "onready_variable_statement", NULL};
+static const char *gd_decorator_types[] = {"annotation", NULL};
 
 // ==================== JAVASCRIPT ====================
 static const char *js_func_types[] = {"function_declaration", "generator_function_declaration",
@@ -1051,6 +1064,11 @@ static const CBMLangSpec lang_specs[CBM_LANG_COUNT] = {
     {CBM_LANG_K8S, empty_types, empty_types, empty_types, yaml_module_types, empty_types,
      empty_types, empty_types, empty_types, empty_types, empty_types, empty_types, NULL,
      empty_types, NULL, NULL},
+
+    // CBM_LANG_GDSCRIPT
+    {CBM_LANG_GDSCRIPT, gd_func_types, gd_class_types, empty_types, gd_module_types, gd_call_types,
+     gd_import_types, empty_types, gd_branch_types, gd_var_types, empty_types, empty_types, NULL,
+     gd_decorator_types, NULL, NULL},
 };
 
 const CBMLangSpec *cbm_lang_spec(CBMLanguage lang) {
@@ -1193,6 +1211,8 @@ const TSLanguage *cbm_ts_language(CBMLanguage lang) {
     case CBM_LANG_KUSTOMIZE:
     case CBM_LANG_K8S:
         return tree_sitter_yaml();
+    case CBM_LANG_GDSCRIPT:
+        return tree_sitter_gdscript();
     default:
         return NULL;
     }

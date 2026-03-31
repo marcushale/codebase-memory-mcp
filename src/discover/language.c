@@ -111,6 +111,9 @@ static const ext_entry_t EXT_TABLE[] = {
     /* Go */
     {".go", CBM_LANG_GO},
 
+    /* GDScript */
+    {".gd", CBM_LANG_GDSCRIPT},
+
     /* GraphQL */
     {".gql", CBM_LANG_GRAPHQL},
     {".graphql", CBM_LANG_GRAPHQL},
@@ -361,6 +364,7 @@ static const char *LANG_NAMES[CBM_LANG_COUNT] = {
     [CBM_LANG_WOLFRAM] = "Wolfram",
     [CBM_LANG_KUSTOMIZE] = "Kustomize",
     [CBM_LANG_K8S] = "Kubernetes",
+    [CBM_LANG_GDSCRIPT] = "GDScript",
 };
 
 /* ── Public API ──────────────────────────────────────────────────── */

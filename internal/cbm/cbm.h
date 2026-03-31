@@ -77,6 +77,7 @@ typedef enum {
     CBM_LANG_WOLFRAM,
     CBM_LANG_KUSTOMIZE, // kustomization.yaml — Kubernetes overlay tool
     CBM_LANG_K8S,       // Generic Kubernetes manifest (apiVersion: detected)
+    CBM_LANG_GDSCRIPT,  // GDScript (Godot game engine)
     CBM_LANG_COUNT
 } CBMLanguage;
 
