@@ -28,7 +28,7 @@ jobs:
   # ── Step 1: Lint (clang-format + cppcheck) ───────────────────
   lint:
     if: ${{ inputs.skip_lint != true }}
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
     steps:
       - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
 
@@ -67,7 +67,7 @@ jobs:
   # Binary-level security (L2/L3/L4/L7) runs in smoke jobs per-platform.
   security-static:
     if: ${{ inputs.skip_lint != true }}
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
     steps:
       - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
 
@@ -83,7 +83,7 @@ jobs:
   # ── Step 1c: CodeQL SAST gate ────────────────────────────────
   codeql-gate:
     if: ${{ inputs.skip_lint != true }}
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
     steps:
       - name: Wait for CodeQL on current commit (max 45 min)
         env:

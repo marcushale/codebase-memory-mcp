@@ -30,7 +30,7 @@ permissions:
 jobs:
   # ── Step 1: Lint (clang-format + cppcheck) ───────────────────
   lint:
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
     steps:
       - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
 
@@ -68,7 +68,7 @@ jobs:
   # No build needed — scans source files and vendored deps only.
   # Binary-level security (L2/L3/L4/L7) runs in smoke jobs per-platform.
   security-static:
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
     steps:
       - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
 
@@ -85,7 +85,7 @@ jobs:
   # Verifies CodeQL has run on the current commit AND has 0 open alerts.
   # Prevents false green from stale/missing scans.
   codeql-gate:
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
     steps:
       - name: Wait for CodeQL on current commit (max 45 min)
         env:
@@ -696,7 +696,7 @@ jobs:
   release-draft:
     needs: [smoke-unix, smoke-windows, security-static, codeql-gate, soak-quick, soak-quick-windows, soak-asan, soak-asan-windows]
     if: ${{ !cancelled() && !failure() }}
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
     permissions:
       contents: write
       id-token: write
@@ -808,7 +808,7 @@ jobs:
   # If it fails, the draft stays unpublished.
   verify:
     needs: [release-draft]
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
     permissions:
       contents: write
     steps:

@@ -10,7 +10,7 @@ permissions: read-all
 
 jobs:
   scorecard:
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
     permissions:
       security-events: write
       id-token: write
